@@ -42,36 +42,32 @@ export default function Home(props) {
     const { latitude, longitude, timestamp, accuracy, error } = usePosition(true, {enableHighAccuracy: true});
     const [points, setPoints] = useState([]);
 
-    const renderPoints = () => {
-      return points.map((point)=><Marker anchor={[point.lat, point.lon]} payload={1} />)
-    }
-
     const addPoint = () => {
-      setPoints(points => [...points, {latitude, longitude}]);
+      const point = {lat: latitude, lon: longitude, timestamp: timestamp};
+      console.log("adding " + JSON.stringify(point));
+      setPoints(points => [...points, point]);
     }
 
     return (
         <>
-            <Fragment height="100%">
+            <Fragment>
                 <CssBaseline />
                 <Box 
                   className={classes.paper}
                   width="100%"
-                  height="100%"
-                  border="1px solid red">
+                  height="100%">
                     
                     <Map center={[latitude ? latitude : 61.4991, longitude ? longitude : 23.7871]} zoom={12} >
-                      <Marker anchor={[latitude ? latitude : 61.4991, longitude ? longitude : 23.7871]} payload={1} />
-                      {renderPoints}
+                      {points.map((point)=><Marker anchor={[point.lat, point.lon]} key={point.timestamp} payload={1} />)}
                     </Map>
                 </Box>
                 <AppBar position="fixed" color="secondary" className={classes.appBar}>
                     <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={addPoint}>
+                        <IconButton edge="start" color="inherit">
                             <Menu />
                         </IconButton>
                         
-                        <Fab color="primary" className={classes.fabButton}>
+                        <Fab color="primary" className={classes.fabButton} onClick={addPoint}>
                             <Add />
                         </Fab>
                     </Toolbar>
