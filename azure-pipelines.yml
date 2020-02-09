@@ -6,6 +6,10 @@
 trigger:
 - master
 
+variables:
+  tag: '$(Build.BuildId)'
+  appName: 'mytrail0022'
+
 pool:
   vmImage: 'ubuntu-latest'
 stages:
@@ -61,5 +65,5 @@ stages:
             - task: AzureWebApp@1
               inputs:
                 azureSubscription: 'sc-mytrail'
-                appName: 'mytrail0022'
-                package: '**/$(Build.BuildId).zip'
+                appName: '$(appName)'
+                package: '$(System.ArtifactsDirectory)/**/$(Build.BuildId).zip'
