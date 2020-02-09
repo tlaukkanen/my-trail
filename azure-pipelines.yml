@@ -67,4 +67,4 @@ stages:
                 azureSubscription: 'sc-mytrail'
                 appType: webAppLinux
                 appName: '$(appName)'
-                #package: '$(System.ArtifactsDirectory)/**/$(Build.BuildId).zip'
+                package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
