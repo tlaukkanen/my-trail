@@ -58,9 +58,8 @@ stages:
             - download: current
               artifact: drop
 
-#            - task: AzureWebApp@1
-#              inputs:
-#                azureSubscription: 'sc-mytrail'
-#                appName: 'mytrail0022'
-#                package: '**/$(Build.BuildId).zip'
-#                customWebConfig: '-Handler iisnode -NodeStartFile server.js -appType node'
+            - task: AzureWebApp@1
+              inputs:
+                azureSubscription: 'sc-mytrail'
+                appName: 'mytrail0022'
+                package: '**/$(Build.BuildId).zip'
