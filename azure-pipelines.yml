@@ -29,7 +29,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: drop'
       condition: succeeded()
-    - publish: '$(Build.ArtifactStagingDirectory)'
+    - publish: 'build' # '$(Build.ArtifactStagingDirectory)'
       artifact: drop  
 #- task: AzureWebApp@1
 #  inputs:
