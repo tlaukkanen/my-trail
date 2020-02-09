@@ -65,5 +65,6 @@ stages:
             - task: AzureWebApp@1
               inputs:
                 azureSubscription: 'sc-mytrail'
+                appType: webAppLinux
                 appName: '$(appName)'
-                package: '$(System.ArtifactsDirectory)/**/$(Build.BuildId).zip'
+                #package: '$(System.ArtifactsDirectory)/**/$(Build.BuildId).zip'
