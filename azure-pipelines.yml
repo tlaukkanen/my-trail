@@ -26,11 +26,20 @@ stages:
         npm install
         npm run build
       displayName: 'npm install and build'
+
+    ## Archive the files into a zip file for publishing
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)/build/'
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        includeRootFolder: false
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: drop'
       condition: succeeded()
-    - publish: 'build' # '$(Build.ArtifactStagingDirectory)'
-      artifact: drop  
+    - publish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      artifact: drop
+
 #- task: AzureWebApp@1
 #  inputs:
 #    azureSubscription: 'sc-mytrail'
