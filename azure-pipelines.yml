@@ -34,11 +34,10 @@ stages:
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
         includeRootFolder: false
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
-      condition: succeeded()
     - publish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      displayName: 'Publish Artifact: drop'
       artifact: drop
+      condition: succeeded()
 
 #- task: AzureWebApp@1
 #  inputs:
