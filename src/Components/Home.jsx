@@ -9,6 +9,10 @@ import NoSleep from 'nosleep.js';
 
 const noSleep = new NoSleep();
 
+// This key should be changed on any other site.
+// Currently it's 
+const MAPTILER_KEY = "rX05MWvUbZEeG85LyLgS";
+
 const useStyles = makeStyles(theme => ({
     text: {
       padding: theme.spacing(2, 2, 0),
@@ -52,6 +56,10 @@ export default function Home(props) {
       setPoints(points => [...points, point]);
     }
 
+    const maptiler = (x, y, z) => {
+      return `https://api.maptiler.com/maps/streets/${z}/${x}/${y}.png?key=${MAPTILER_KEY}`;
+    }
+
     const toggleTracking = () => {
       setIsTracking(!isTracking);
       if(!isTracking) {
@@ -87,7 +95,10 @@ export default function Home(props) {
                   width="100%"
                   height="100%">
                     
-                    <Map center={[latitude ? latitude : 61.4991, longitude ? longitude : 23.7871]} zoom={12} >
+                    <Map 
+                        center={[latitude ? latitude : 61.4991, longitude ? longitude : 23.7871]} 
+                        zoom={12} 
+                        provider={maptiler}>
                       {drawMarker}
                     </Map>
                 </Box>
