@@ -8,22 +8,29 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'    
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '12.x'
+      displayName: 'Install Node.js'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
-
-- task: PublishBuildArtifacts@1
-  inputs: 
-    pathtoPublish: $(build.artifactstagingdirectory) # dist or build files
-
+    - script: |
+        npm install
+        npm run build
+      displayName: 'npm install and build'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      condition: succeeded()
+    - publish: '$(Build.ArtifactStagingDirectory)'
+      artifact: drop  
 #- task: AzureWebApp@1
 #  inputs:
 #    azureSubscription: 'sc-mytrail'
