@@ -49,6 +49,10 @@ export default function Home(props) {
     const { latitude, longitude, timestamp, accuracy, error } = usePosition(true);
     const [points, setPoints] = useState([]);
     const [isTracking, setIsTracking] = useState(false);
+    const [trail, setTrail] = useState({
+      distance: 0.0,
+      durationMin: 0.0
+    });
 
     const addPoint = () => {
       const point = {lat: latitude, lon: longitude, timestamp: timestamp};
@@ -62,7 +66,7 @@ export default function Home(props) {
 
     const toggleTracking = () => {
       setIsTracking(!isTracking);
-      if(!isTracking) {
+      if(isTracking) {
         noSleep.enable();
       } else {
         noSleep.disable();
@@ -71,10 +75,15 @@ export default function Home(props) {
 
     const drawMarker = () => {
       if(isTracking) {
+        console.log("draw");
         return (
           <Marker anchor={[latitude, longitude]} payload={1} />
         );
+      } else {
+        console.log("nodraw");
+        return <></>;
       }
+
     }
 
     const drawToggle = () => {
@@ -90,6 +99,7 @@ export default function Home(props) {
         <>
             <Fragment>
                 <CssBaseline />
+                
                 <Box 
                   className={classes.paper}
                   width="100%"
@@ -99,11 +109,11 @@ export default function Home(props) {
                         center={[latitude ? latitude : 61.4991, longitude ? longitude : 23.7871]} 
                         zoom={12} 
                         provider={maptiler}>
-                      {drawMarker}
+                      {drawMarker()}
                     </Map>
                 </Box>
                 <IconButton size="medium" className={classes.fabButton} onClick={toggleTracking}>
-                  <PlayCircleFilled fontSize="large"/>
+                  {drawToggle()}
                 </IconButton>
             </Fragment>
         </>
